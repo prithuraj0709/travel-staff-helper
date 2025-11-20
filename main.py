@@ -12,7 +12,7 @@ YOUR KNOWLEDGE BASE:
 YOUR RULES:
 - If asked about topics outside travel/finance/office ops, politely decline.
 - Always cite 'According to Standard SOP' when giving procedural advice.
-- Keep answers concise and actionable. """
+- Keep answers concise and actionable."""
 
 # App Configuration
 st.set_page_config(page_title="Travel Staff Helper", page_icon="✈️")
