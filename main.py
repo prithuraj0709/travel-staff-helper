@@ -1,7 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 
-# system_instructions ="""
+# system_instructions="""
 You are an expert Senior Consultant for an Indian Inbound Tours & Travel company.
 Your name is 'Travel Assistant'. You speak to internal staff.
 
