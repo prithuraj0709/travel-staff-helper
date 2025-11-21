@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import google.generativeai as genai
 
 # 1. APP CONFIGURATION
 st.set_page_config(page_title="Hotel Rate Checker", page_icon="🏨", layout="wide")
@@ -42,7 +41,7 @@ if not hotel_data.empty:
         
         # --- HTML CONSTRUCTION ---
         # Layout: 12 Columns Total
-        # Order: City, Hotel, Rate, From, To, Room, Type, Plan, Sr, Dr, Eb, Days(Last)
+        # Note: The chat section has been removed from the bottom.
         
         html_card = f"""
 <style>
@@ -81,14 +80,3 @@ if not hotel_data.empty:
 
 else:
     st.warning("No rates found.")
-
-# 5. AI ASSISTANT
-st.write("---")
-if prompt := st.chat_input("Ask about this hotel..."):
-    with st.chat_message("user"):
-        st.write(prompt)
-    if "GOOGLE_API_KEY" in st.secrets:
-        genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        with st.chat_message("assistant"):
-            st.write(model.generate_content(f"Data: {hotel_data.to_markdown()}\nQ: {prompt}").text)
