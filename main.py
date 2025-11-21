@@ -11,7 +11,7 @@ st.title("Hotel Rate Reference Tool")
 # 1. LOAD THE CSV DATA
 try:
     # This reads your uploaded file
-    df = pd.read_csv("Hotel Rates.csv")
+    df = pd.read_csv("Hotel Rates.csv", encoding="latin1")
     # This converts the data into a text format the AI can read
     data_for_ai = df.to_markdown(index=False)
 except FileNotFoundError:
