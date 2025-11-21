@@ -54,7 +54,7 @@ if not hotel_data.empty:
     # Loop through rows
     for index, row in hotel_data.iterrows():
         
-        # Define the HTML (Clean, no backticks)
+        # Define the HTML
         html_card = f"""
         <style>
             .rate-table {{
@@ -113,14 +113,8 @@ if not hotel_data.empty:
         </table>
         """
         
-        # This command forces Streamlit to render the HTML as a table
+        # RENDER THE HTML (Aligned with html_card above)
         st.markdown(html_card, unsafe_allow_html=True)
-
-else:
-    st.warning("No rate details found for this selection.")        
-                
-        # ✅ CORRECT (Renders the actual table)
-        st.markdown(html_card, unsafe_allow_html=True) 
 
 else:
     st.warning("No rate details found for this selection.")
