@@ -44,13 +44,80 @@ except KeyError as e:
     st.error(f"🚨 Column Name Error: Your CSV does not have a column named {e}. Please check your CSV headers.")
     st.stop()
 
-# 4. DISPLAY THE RATE (The Result)
+# 4. DISPLAY THE RATE (Custom Layout)
 # ---------------------------------------------------------
 st.divider()
-st.subheader(f"Rate Details: {selected_hotel}")
 
-# Display the data as a clean table
-st.table(hotel_data)
+if not hotel_data.empty:
+    st.subheader(f"Rate Details: {selected_hotel}")
+    
+    # We loop through the results (in case there are multiple rows for one hotel)
+    for index, row in hotel_data.iterrows():
+        
+        # We define the HTML structure to match your image EXACTLY
+        # We use row.get() so the app doesn't crash if a column is empty
+        
+        html_card = f"""
+        <style>
+            .rate-table {{
+                width: 100%;
+                border-collapse: collapse;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                margin-bottom: 20px;
+                border: 1px solid black;
+            }}
+            .rate-table td {{
+                border: 1px solid black;
+                padding: 8px;
+                vertical-align: top;
+            }}
+            .lbl {{
+                color: #00B0F0; /* The Blue color from your image */
+                font-weight: bold;
+                display: block;
+                margin-bottom: 4px;
+            }}
+            .val {{
+                color: black;
+            }}
+        </style>
+
+        <table class="rate-table">
+            <tr>
+                <td><span class="lbl">City Code</span><span class="val">{row.get('City Code', '-')}</span></td>
+                <td><span class="lbl">Hotel</span><span class="val">{row.get('Hotel', '-')}</span></td>
+                <td><span class="lbl">Rate</span><span class="val">{row.get('Rate', '-')}</span></td>
+                <td><span class="lbl">From</span><span class="val">{row.get('From', '-')}</span></td>
+                <td><span class="lbl">To</span><span class="val">{row.get('To', '-')}</span></td>
+                <td><span class="lbl">Room</span><span class="val">{row.get('Room', '-')}</span></td>
+            </tr>
+            <tr>
+                <td><span class="lbl">Type</span><span class="val">{row.get('Type', '-')}</span></td>
+                <td><span class="lbl">Plan</span><span class="val">{row.get('Plan', '-')}</span></td>
+                <td><span class="lbl">Sr Net Cost</span><span class="val">{row.get('Sr Net Cost', '-')}</span></td>
+                <td><span class="lbl">Dr Net Cost</span><span class="val">{row.get('Dr Net Cost', '-')}</span></td>
+                <td><span class="lbl">Eb Net Cost</span><span class="val">{row.get('Eb Net Cost', '-')}</span></td>
+                <td><span class="lbl">Days</span><span class="val">{row.get('Days', '-')}</span></td>
+            </tr>
+            <tr>
+                <td colspan="3" height="60">
+                    <span class="lbl">Contract Remarks</span>
+                    <div class="val">{row.get('Contract Remarks', '-')}</div>
+                </td>
+                <td colspan="3" height="60">
+                    <span class="lbl">Sp Noting</span>
+                    <div class="val">{row.get('Sp Noting', '-')}</div>
+                </td>
+            </tr>
+        </table>
+        """
+        
+        # Render the HTML
+        st.markdown(html_card, unsafe_allow_html=True)
+
+else:
+    st.warning("No rate details found for this selection.")
 
 # 5. OPTIONAL: ASK AI FOR DETAILS (Hybrid Feature)
 # ---------------------------------------------------------
