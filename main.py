@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 
 # 1. APP CONFIGURATION
-st.set_page_config(page_title="Hotel Rate Checker", page_icon="🏨", layout="wide")
-st.title("Hotel Rate Reference Tool")
+st.set_page_config(page_title="Hotel Rates", page_icon="🏨", layout="wide")
+st.title("Hotel Rates")
 
 # 2. LOAD DATA
 try:
