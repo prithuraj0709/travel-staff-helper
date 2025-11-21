@@ -51,12 +51,10 @@ st.divider()
 if not hotel_data.empty:
     st.subheader(f"Rate Details: {selected_hotel}")
     
-    # We loop through the results (in case there are multiple rows for one hotel)
+    # Loop through rows
     for index, row in hotel_data.iterrows():
         
-        # We define the HTML structure to match your image EXACTLY
-        # We use row.get() so the app doesn't crash if a column is empty
-        
+        # Define the HTML (Clean, no backticks)
         html_card = f"""
         <style>
             .rate-table {{
@@ -64,8 +62,8 @@ if not hotel_data.empty:
                 border-collapse: collapse;
                 font-family: Arial, sans-serif;
                 font-size: 14px;
-                margin-bottom: 20px;
                 border: 1px solid black;
+                margin-bottom: 20px;
             }}
             .rate-table td {{
                 border: 1px solid black;
@@ -73,13 +71,15 @@ if not hotel_data.empty:
                 vertical-align: top;
             }}
             .lbl {{
-                color: #00B0F0; /* The Blue color from your image */
+                color: #00B0F0;
                 font-weight: bold;
                 display: block;
-                margin-bottom: 4px;
+                font-size: 12px;
+                margin-bottom: 2px;
             }}
             .val {{
                 color: black;
+                font-weight: normal;
             }}
         </style>
 
@@ -101,11 +101,11 @@ if not hotel_data.empty:
                 <td><span class="lbl">Days</span><span class="val">{row.get('Days', '-')}</span></td>
             </tr>
             <tr>
-                <td colspan="3" height="60">
+                <td colspan="3" height="50">
                     <span class="lbl">Contract Remarks</span>
                     <div class="val">{row.get('Contract Remarks', '-')}</div>
                 </td>
-                <td colspan="3" height="60">
+                <td colspan="3" height="50">
                     <span class="lbl">Sp Noting</span>
                     <div class="val">{row.get('Sp Noting', '-')}</div>
                 </td>
@@ -113,9 +113,12 @@ if not hotel_data.empty:
         </table>
         """
         
-        # ❌ WRONG (Shows the code as text)
-        # st.write(html_card) 
-        
+        # This command forces Streamlit to render the HTML as a table
+        st.markdown(html_card, unsafe_allow_html=True)
+
+else:
+    st.warning("No rate details found for this selection.")        
+                
         # ✅ CORRECT (Renders the actual table)
         st.markdown(html_card, unsafe_allow_html=True) 
 
