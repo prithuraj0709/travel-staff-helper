@@ -9,7 +9,7 @@ st.title("Hotel Rate Reference Tool")
 # 2. LOAD DATA
 try:
     df = pd.read_csv("Hotel Rates.csv", encoding="latin1")
-    df.columns = df.columns.str.strip() # Remove extra spaces
+    df.columns = df.columns.str.strip()
 except FileNotFoundError:
     st.error("🚨 Error: 'Hotel Rates.csv' not found.")
     st.stop()
@@ -37,21 +37,20 @@ if not hotel_data.empty:
 
     for index, row in hotel_data.iterrows():
         
-        # Helper to remove decimal .0 from Days if present
+        # Helper: Format Days (remove .0)
         days_val = str(row.get('Days', '-')).replace('.0', '')
         
-        # --- HTML START ---
-        # We define ONE single <tr> for the top row to keep it in one line.
+        # --- HTML CONSTRUCTION ---
+        # We use .replace('\n', '') to remove newlines so Streamlit doesn't break the table
         html_card = f"""
 <style>
     .rate-table {{ width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 13px; border: 1px solid black; margin-bottom: 20px; background-color: white; }}
     .rate-table td {{ border: 1px solid black; padding: 5px; vertical-align: top; color: black; text-align: center; }}
     .lbl {{ color: #00B0F0; font-weight: bold; display: block; font-size: 10px; margin-bottom: 2px; text-transform: uppercase; white-space: nowrap; }}
     .val {{ color: black; font-weight: normal; }}
-    .cost-col {{ background-color: #eaf6ff; }} /* Light Blue for Costs */
+    .cost-col {{ background-color: #eaf6ff; }}
     .remarks {{ text-align: left; padding: 8px; background-color: #f9f9f9; }}
 </style>
-
 <table class="rate-table">
     <tr>
         <td><span class="lbl">City</span><span class="val">{row.get('City Code', '-')}</span></td>
@@ -62,7 +61,6 @@ if not hotel_data.empty:
         <td><span class="lbl">Room</span><span class="val">{row.get('Room', '-')}</span></td>
         <td><span class="lbl">Type</span><span class="val">{row.get('Type', '-')}</span></td>
         <td><span class="lbl">Days</span><span class="val">{days_val}</span></td>
-        
         <td class="cost-col"><span class="lbl">Plan</span><span class="val">{row.get('Plan', '-')}</span></td>
         <td class="cost-col"><span class="lbl">SGL (Sr)</span><span class="val">{row.get('Sr Net Cost', '-')}</span></td>
         <td class="cost-col"><span class="lbl">DBL (Dr)</span><span class="val">{row.get('Dr Net Cost', '-')}</span></td>
@@ -70,20 +68,13 @@ if not hotel_data.empty:
         <td class="cost-col"><span class="lbl">LN</span><span class="val">{row.get('LN', '-')}</span></td>
         <td class="cost-col"><span class="lbl">DN</span><span class="val">{row.get('DN', '-')}</span></td>
     </tr>
-
     <tr>
-        <td colspan="7" class="remarks">
-            <span class="lbl">Contract Remarks</span>
-            <div class="val" style="white-space: pre-wrap;">{row.get('Contract Remarks', '-')}</div>
-        </td>
-        <td colspan="7" class="remarks">
-            <span class="lbl">Sp Noting</span>
-            <div class="val" style="white-space: pre-wrap;">{row.get('Sp Noting', '-')}</div>
-        </td>
+        <td colspan="7" class="remarks"><span class="lbl">Contract Remarks</span><div class="val" style="white-space: pre-wrap;">{row.get('Contract Remarks', '-')}</div></td>
+        <td colspan="7" class="remarks"><span class="lbl">Sp Noting</span><div class="val" style="white-space: pre-wrap;">{row.get('Sp Noting', '-')}</div></td>
     </tr>
 </table>
-"""
-        # --- HTML END ---
+""".replace("\n", "") 
+        # ^-- The .replace command above removes all hidden breaks 
 
         st.markdown(html_card, unsafe_allow_html=True)
 
