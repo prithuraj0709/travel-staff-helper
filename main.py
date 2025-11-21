@@ -26,7 +26,7 @@ except FileNotFoundError:
 # We get unique values from the 'City' column and sort them
 try:
     # REPLACE 'City' below with your exact CSV column name if different
-    city_list = sorted(df['City Code'].unique())
+    city_list = sorted(df['City Code'].astype(str).unique())
     selected_city = st.selectbox("Step 1: Select City / City Code", city_list)
 
     # B. Filter data based on selected City
@@ -34,7 +34,7 @@ try:
 
     # C. Create the Hotel Dropdown
     # REPLACE 'Hotel Name' below with your exact CSV column name if different
-    hotel_list = sorted(hotels_in_city['Hotel Name'].unique())
+    hotel_list = sorted(hotels_in_city['Hotel Name'].astype(str).unique())
     selected_hotel = st.selectbox("Step 2: Select Hotel", hotel_list)
 
     # D. Get the specific row for that hotel
