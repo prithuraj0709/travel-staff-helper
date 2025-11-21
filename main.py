@@ -113,8 +113,11 @@ if not hotel_data.empty:
         </table>
         """
         
-        # Render the HTML
-        st.markdown(html_card, unsafe_allow_html=True)
+        # ❌ WRONG (Shows the code as text)
+        # st.write(html_card) 
+        
+        # ✅ CORRECT (Renders the actual table)
+        st.markdown(html_card, unsafe_allow_html=True) 
 
 else:
     st.warning("No rate details found for this selection.")
