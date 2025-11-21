@@ -34,11 +34,11 @@ try:
 
     # C. Create the Hotel Dropdown
     # REPLACE 'Hotel Name' below with your exact CSV column name if different
-    hotel_list = sorted(hotels_in_city['Hotel Name'].astype(str).unique())
+    hotel_list = sorted(hotels_in_city['Hotel'].astype(str).unique())
     selected_hotel = st.selectbox("Step 2: Select Hotel", hotel_list)
 
     # D. Get the specific row for that hotel
-    hotel_data = hotels_in_city[hotels_in_city['Hotel Name'] == selected_hotel]
+    hotel_data = hotels_in_city[hotels_in_city['Hotel'] == selected_hotel]
 
 except KeyError as e:
     st.error(f"🚨 Column Name Error: Your CSV does not have a column named {e}. Please check your CSV headers.")
