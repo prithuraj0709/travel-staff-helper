@@ -37,45 +37,47 @@ if not hotel_data.empty:
 
     for index, row in hotel_data.iterrows():
         
-        # --- THE FIX: NO INDENTATION HERE ---
-        # We push the HTML all the way to the left to prevent errors.
+        # --- HTML START (Flush Left) ---
         html_card = f"""
 <style>
-    .rate-table {{ width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; border: 1px solid black; margin-bottom: 20px; background-color: white; }}
-    .rate-table td {{ border: 1px solid black; padding: 8px; vertical-align: top; color: black; }}
-    .lbl {{ color: #00B0F0; font-weight: bold; display: block; font-size: 12px; margin-bottom: 2px; }}
+    .rate-table {{ width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 13px; border: 1px solid black; margin-bottom: 20px; background-color: white; }}
+    .rate-table td {{ border: 1px solid black; padding: 6px; vertical-align: top; color: black; text-align: center; }}
+    .lbl {{ color: #00B0F0; font-weight: bold; display: block; font-size: 11px; margin-bottom: 2px; text-transform: uppercase; }}
     .val {{ color: black; font-weight: normal; }}
+    .remarks {{ text-align: left; padding: 10px; background-color: #f9f9f9; }}
 </style>
 <table class="rate-table">
     <tr>
-        <td><span class="lbl">City Code</span><span class="val">{row.get('City Code', '-')}</span></td>
+        <td><span class="lbl">City</span><span class="val">{row.get('City Code', '-')}</span></td>
         <td><span class="lbl">Hotel</span><span class="val">{row.get('Hotel', '-')}</span></td>
-        <td><span class="lbl">Rate</span><span class="val">{row.get('Rate', '-')}</span></td>
+        <td><span class="lbl">Rate Code</span><span class="val">{row.get('Rate', '-')}</span></td>
         <td><span class="lbl">From</span><span class="val">{row.get('From', '-')}</span></td>
         <td><span class="lbl">To</span><span class="val">{row.get('To', '-')}</span></td>
         <td><span class="lbl">Room</span><span class="val">{row.get('Room', '-')}</span></td>
-    </tr>
-    <tr>
         <td><span class="lbl">Type</span><span class="val">{row.get('Type', '-')}</span></td>
-        <td><span class="lbl">Plan</span><span class="val">{row.get('Plan', '-')}</span></td>
-        <td><span class="lbl">Sr Net Cost</span><span class="val">{row.get('Sr Net Cost', '-')}</span></td>
-        <td><span class="lbl">Dr Net Cost</span><span class="val">{row.get('Dr Net Cost', '-')}</span></td>
-        <td><span class="lbl">Eb Net Cost</span><span class="val">{row.get('Eb Net Cost', '-')}</span></td>
         <td><span class="lbl">Days</span><span class="val">{row.get('Days', '-')}</span></td>
+        
+        <td style="background-color: #eaf6ff"><span class="lbl">Plan</span><span class="val">{row.get('Plan', '-')}</span></td>
+        <td style="background-color: #eaf6ff"><span class="lbl">SGL (Sr)</span><span class="val">{row.get('Sr Net Cost', '-')}</span></td>
+        <td style="background-color: #eaf6ff"><span class="lbl">DBL (Dr)</span><span class="val">{row.get('Dr Net Cost', '-')}</span></td>
+        <td style="background-color: #eaf6ff"><span class="lbl">E.Bed (Eb)</span><span class="val">{row.get('Eb Net Cost', '-')}</span></td>
+        <td style="background-color: #eaf6ff"><span class="lbl">LN</span><span class="val">{row.get('LN', '-')}</span></td>
+        <td style="background-color: #eaf6ff"><span class="lbl">DN</span><span class="val">{row.get('DN', '-')}</span></td>
     </tr>
+
     <tr>
-        <td colspan="3" height="50">
+        <td colspan="7" class="remarks">
             <span class="lbl">Contract Remarks</span>
-            <div class="val">{row.get('Contract Remarks', '-')}</div>
+            <div class="val" style="white-space: pre-wrap;">{row.get('Contract Remarks', '-')}</div>
         </td>
-        <td colspan="3" height="50">
+        <td colspan="7" class="remarks">
             <span class="lbl">Sp Noting</span>
-            <div class="val">{row.get('Sp Noting', '-')}</div>
+            <div class="val" style="white-space: pre-wrap;">{row.get('Sp Noting', '-')}</div>
         </td>
     </tr>
 </table>
 """
-        # --- END OF FIX ---
+        # --- HTML END ---
 
         st.markdown(html_card, unsafe_allow_html=True)
 
