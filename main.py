@@ -41,7 +41,9 @@ if not hotel_data.empty:
         days_val = str(row.get('Days', '-')).replace('.0', '')
         
         # --- HTML CONSTRUCTION ---
-        # We use .replace('\n', '') to remove newlines so Streamlit doesn't break the table
+        # Layout: 12 Columns Total
+        # Order: City, Hotel, Rate, From, To, Room, Type, Plan, Sr, Dr, Eb, Days(Last)
+        
         html_card = f"""
 <style>
     .rate-table {{ width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 13px; border: 1px solid black; margin-bottom: 20px; background-color: white; }}
@@ -60,21 +62,20 @@ if not hotel_data.empty:
         <td><span class="lbl">To</span><span class="val">{row.get('To', '-')}</span></td>
         <td><span class="lbl">Room</span><span class="val">{row.get('Room', '-')}</span></td>
         <td><span class="lbl">Type</span><span class="val">{row.get('Type', '-')}</span></td>
-        <td><span class="lbl">Days</span><span class="val">{days_val}</span></td>
+        
         <td class="cost-col"><span class="lbl">Plan</span><span class="val">{row.get('Plan', '-')}</span></td>
         <td class="cost-col"><span class="lbl">SGL (Sr)</span><span class="val">{row.get('Sr Net Cost', '-')}</span></td>
         <td class="cost-col"><span class="lbl">DBL (Dr)</span><span class="val">{row.get('Dr Net Cost', '-')}</span></td>
         <td class="cost-col"><span class="lbl">E.Bed (Eb)</span><span class="val">{row.get('Eb Net Cost', '-')}</span></td>
-        <td class="cost-col"><span class="lbl">LN</span><span class="val">{row.get('LN', '-')}</span></td>
-        <td class="cost-col"><span class="lbl">DN</span><span class="val">{row.get('DN', '-')}</span></td>
+        
+        <td><span class="lbl">Days</span><span class="val">{days_val}</span></td>
     </tr>
     <tr>
-        <td colspan="7" class="remarks"><span class="lbl">Contract Remarks</span><div class="val" style="white-space: pre-wrap;">{row.get('Contract Remarks', '-')}</div></td>
-        <td colspan="7" class="remarks"><span class="lbl">Sp Noting</span><div class="val" style="white-space: pre-wrap;">{row.get('Sp Noting', '-')}</div></td>
+        <td colspan="6" class="remarks"><span class="lbl">Contract Remarks</span><div class="val" style="white-space: pre-wrap;">{row.get('Contract Remarks', '-')}</div></td>
+        <td colspan="6" class="remarks"><span class="lbl">Sp Noting</span><div class="val" style="white-space: pre-wrap;">{row.get('Sp Noting', '-')}</div></td>
     </tr>
 </table>
 """.replace("\n", "") 
-        # ^-- The .replace command above removes all hidden breaks 
 
         st.markdown(html_card, unsafe_allow_html=True)
 
